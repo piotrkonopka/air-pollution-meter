@@ -6,6 +6,6 @@ class App extends Component {
             <div>App working</div>
         );
     }
-};
+}
 
 export default App;
