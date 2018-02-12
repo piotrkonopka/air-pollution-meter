@@ -1,0 +1,42 @@
+{
+  "name": "air-pollution-meter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Real-time air quality meter",
+  "author": "piotrkonopka <piotr.adrian.konopka@gmail.com>",
+  "dependencies": {
+    "@types/dotenv": "^4.0.2",
+    "@types/react-bootstrap": "^0.32.3",
+    "@types/react-redux": "^5.0.15",
+    "@types/react-router-dom": "^4.2.4",
+    "bootstrap-css-only": "^4.0.0",
+    "dotenv": "^5.0.0",
+    "react": "^16.2.0",
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-scripts-ts": "2.13.0",
+    "redux": "^3.7.2"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.1.2",
+    "@types/node": "^9.4.5",
+    "@types/react": "^16.0.37",
+    "@types/react-dom": "^16.0.4",
+    "typescript": "^2.7.1"
+  },
+  "keywords": [
+    "react",
+    "redux",
+    "typescript",
+    "html5",
+    "airly"
+  ]
+}
