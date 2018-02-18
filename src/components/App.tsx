@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 
+import Geolocation from './Geolocation';
+
 class App extends Component {
     render() {
         return (
-            <div>App working</div>
+            <div>
+                <Geolocation />
+            </div>
         );
     }
 }
