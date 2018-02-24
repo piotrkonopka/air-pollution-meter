@@ -1,0 +1,16 @@
+body {
+    background-color: #eee;
+}
+
+.canvas {
+    position: absolute; 
+    visibility: hidden;
+}
+
+.panel {
+    margin-top: 40px;
+}
+
+.panel-footer {
+    text-align: center;
+}

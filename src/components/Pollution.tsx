@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { setPollution } from '../actions';
 import { LocationData, PollutionData, State, PollutionAction } from '../interfaces';
 import config from '../config';
+import DisplayData from './DisplayData';
 
 export interface PollutionProps {
     location: LocationData,
@@ -43,13 +44,9 @@ class Pollution extends PureComponent<PollutionProps, State> {
     }
     
     render() {
-        const { location } = this.props;
-        
         return (
             <div>
-                Lat: {location.latitude}
-                <br />
-                Lng: {location.longitude}
+                <DisplayData />
             </div>
         );
     }
