@@ -2,41 +2,37 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import { setLocation } from '../actions';
-import { State, Location, LocationAction } from '../interfaces';
+import { State, LocationData, LocationAction } from '../interfaces';
 import Pollution from './Pollution';
 
 export interface GeolocationProps {
-    location: Location,
-    setLocation(location: Location): LocationAction
+    location: LocationData,
+    setLocation(location: LocationData): LocationAction
 }
 
 class Geolocation extends PureComponent<GeolocationProps, State> {
     componentDidMount() {
-        const { setLocation } = this.props;
-        
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
-                setLocation({
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
+                this.props.setLocation({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
                 });
             });
         }
     }
     
     render() {
-        const { location } = this.props;
-        
         return (
             <div>
-                <Pollution location={location} />
+                <Pollution />
             </div>
         );
     }
 }
 
 function mapStateToProps(state: State) {
-    return { location: state.location }
+    return { location: state.location };
 }
 
 export default connect(mapStateToProps, { setLocation })(Geolocation);

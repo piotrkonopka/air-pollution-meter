@@ -1,14 +1,45 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 
-import { Location } from '../interfaces';
+import { setPollution } from '../actions';
+import { LocationData, PollutionData, State, PollutionAction } from '../interfaces';
+import config from '../config';
 
 export interface PollutionProps {
-    location: Location
+    location: LocationData,
+    pollution: PollutionData,
+    setPollution(pollution: PollutionData): PollutionAction
 }
 
-class Pollution extends PureComponent<PollutionProps> {
-    constructor(props: PollutionProps) {
-        super(props);
+class Pollution extends PureComponent<PollutionProps, State> {
+    componentWillReceiveProps(nextProps: PollutionProps) {
+        if (Object.keys(nextProps.pollution).length === 0) {
+            const { location } = nextProps;
+            const myHeaders = new Headers({
+                Accept: 'application/json',
+                apikey: config.AIRLY_API_KEY
+            });
+
+            const url = ['https://airapi.airly.eu/v1/nearestSensor/measurements',
+                `?latitude=${location.latitude}`,
+                `&longitude=${location.longitude}`,
+                '&maxDistance=2000'
+            ].join('');
+
+            const myRequest = new Request(url, { 
+                method: 'GET',
+                headers: myHeaders,
+                mode: 'cors',
+                cache: 'default' 
+            });
+
+            fetch(myRequest)
+                .then(response => response.json())
+                .then((data: PollutionData) => {
+                        this.props.setPollution(data);
+                })
+                .catch(error => console.error(error.message));
+        }
     }
     
     render() {
@@ -16,12 +47,19 @@ class Pollution extends PureComponent<PollutionProps> {
         
         return (
             <div>
-                Lat: { location.lat }
+                Lat: {location.latitude}
                 <br />
-                Lng: { location.lng }
+                Lng: {location.longitude}
             </div>
         );
     }
 } 
 
-export default Pollution;
+function mapStateToProps(state: State) {
+    return { 
+        location: state.location,
+        pollution: state.pollution
+    };
+}
+
+export default connect(mapStateToProps, { setPollution })(Pollution);
