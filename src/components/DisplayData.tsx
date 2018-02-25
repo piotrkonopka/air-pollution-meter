@@ -40,10 +40,10 @@ class DisplayData extends PureComponent<DisplayDataProps, State> {
 
         if (Object.keys(pollution).length !== 0) {
                 const colors: string[] = [
-                    'green',
-                    'yellow',
+                    'forestgreen',
+                    'gold',
                     'orange',
-                    'red',
+                    'lightcoral',
                     'crimson',
                     'darkred'
                 ];
@@ -88,7 +88,7 @@ class DisplayData extends PureComponent<DisplayDataProps, State> {
         return (
             <Grid>
                 <Row>
-                    <Col lg={4} lgOffset={4}>
+                    <Col lg={4} lgOffset={4} md={5} mdOffset={4} sm={6} smOffset={3}>
                         <Panel bsStyle="primary">
                             <Panel.Heading>
                                 <Panel.Title componentClass="h4">Air Quality Meter</Panel.Title>
@@ -110,6 +110,8 @@ class DisplayData extends PureComponent<DisplayDataProps, State> {
                                 <Image 
                                     ref={image => this.image = (image as Image)} 
                                     src=""
+                                    responsive={true}
+                                    className="center-image"
                                 />
                             </Panel.Body>
                             
