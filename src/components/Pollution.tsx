@@ -13,33 +13,36 @@ export interface PollutionProps {
 }
 
 class Pollution extends PureComponent<PollutionProps, State> {
-    componentWillReceiveProps(nextProps: PollutionProps) {
-        if (Object.keys(nextProps.pollution).length === 0) {
-            const { location } = nextProps;
-            const myHeaders = new Headers({
-                Accept: 'application/json',
-                apikey: config.AIRLY_API_KEY
-            });
+    getPollutionData(location: LocationData) {
+        const myHeaders = new Headers({
+            Accept: 'application/json',
+            apikey: config.AIRLY_API_KEY
+        });
 
-            const url = ['https://airapi.airly.eu/v1/nearestSensor/measurements',
-                `?latitude=${location.latitude}`,
-                `&longitude=${location.longitude}`,
-                '&maxDistance=2000'
-            ].join('');
+        const url = ['https://airapi.airly.eu/v1/nearestSensor/measurements',
+            `?latitude=${location.latitude}`,
+            `&longitude=${location.longitude}`,
+            '&maxDistance=2000'
+        ].join('');
 
-            const myRequest = new Request(url, { 
-                method: 'GET',
-                headers: myHeaders,
-                mode: 'cors',
-                cache: 'default' 
-            });
+        const myRequest = new Request(url, { 
+            method: 'GET',
+            headers: myHeaders,
+            mode: 'cors',
+            cache: 'default' 
+        });
 
-            fetch(myRequest)
-                .then(response => response.json())
-                .then((data: PollutionData) => {
-                        this.props.setPollution(data);
-                })
-                .catch(error => console.error(error.message));
+        fetch(myRequest)
+            .then(response => response.json())
+            .then((data: PollutionData) => {
+                    this.props.setPollution(data);
+            })
+            .catch(error => console.error(error.message));
+    }
+    
+    componentDidUpdate(prevProps: PollutionProps) {
+        if (prevProps.location !== this.props.location) {
+            this.getPollutionData(this.props.location);
         }
     }
     

@@ -34,7 +34,15 @@ export interface PollutionAction {
     pollution: PollutionData
 }
 
+export interface GoogleRequestType {
+    query: string
+}
+
 export interface State {
     location?: LocationData,
-    pollution?: PollutionData
+    pollution?: PollutionData,
+    googleRequest?: GoogleRequestType
+    googleService?: {
+        textSearch(request: GoogleRequestType, callback: {}): void
+    }
 }

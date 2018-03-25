@@ -5,6 +5,7 @@ body {
 .canvas {
     position: absolute; 
     visibility: hidden;
+    display: none;
 }
 
 .panel {

@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
-import Button from 'react-bootstrap/lib/Button';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -13,6 +12,7 @@ import Image from 'react-bootstrap/lib/Image';
 import Panel from 'react-bootstrap/lib/Panel';
 
 import { PollutionData, State } from '../interfaces/';
+import SearchPlace from './SearchPlace';
 
 export interface DisplayDataProps {
     pollution: PollutionData
@@ -21,14 +21,16 @@ export interface DisplayDataProps {
 class DisplayData extends PureComponent<DisplayDataProps, State> {
     canvas: HTMLCanvasElement;
     image: Image;
-    city: FormControl;
+    city: HTMLInputElement;
     
     componentDidMount() {
         this.displayData();
     }
     
-    componentDidUpdate() {
-        this.displayData();
+    componentDidUpdate(prevProps: DisplayDataProps) {
+        if (prevProps.pollution !== this.props.pollution) {
+            this.displayData();
+        }
     }
     
     displayData() {
@@ -97,10 +99,10 @@ class DisplayData extends PureComponent<DisplayDataProps, State> {
                             <Panel.Body>
                                 <form>
                                     <FormGroup controlId="formBasicText">
-                                        <ControlLabel>Enter city name:</ControlLabel>
+                                        <ControlLabel>Enter the name of the Polish city:</ControlLabel>
                                         <FormControl
                                             type="text"
-                                            ref={city => this.city = (city as FormControl)} 
+                                            inputRef={city => this.city = (city as HTMLInputElement)} 
                                             placeholder="city name"
                                         />
                                         <FormControl.Feedback />
@@ -116,9 +118,7 @@ class DisplayData extends PureComponent<DisplayDataProps, State> {
                             </Panel.Body>
                             
                             <Panel.Footer>
-                                <Button bsStyle="primary">
-                                    Check pollution level in chosen city
-                                </Button>
+                                <SearchPlace cityData={this.city}/>
                             </Panel.Footer>
                         </Panel>
                         
