@@ -11,14 +11,26 @@ export interface GeolocationProps {
 }
 
 class Geolocation extends PureComponent<GeolocationProps, State> {
+    setDefaultLocation() {
+        this.props.setLocation({
+            latitude: 0,
+            longitude: 0
+        });
+    }
+    
     componentDidMount() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
-                this.props.setLocation({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                });
-            });
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    this.props.setLocation({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    });
+                }, 
+                () => this.setDefaultLocation()
+            );
+        } else {
+            this.setDefaultLocation();
         }
     }
     

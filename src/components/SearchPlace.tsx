@@ -44,7 +44,9 @@ class SearchPlace extends PureComponent<SearchPlaceProps, State> {
     }
     
     getPlaceData() {
-        if (this.props.cityData.value !== null) {
+        if (typeof this.props.cityData.value === 'string' && 
+            this.props.cityData.value.length > 3 &&
+            this.props.cityData.value.length < 20) {
             this.setState({googleRequest: { query: this.props.cityData.value }}, () => {
                 const request = this.state.googleRequest as GoogleRequestType;
                 const service = this.state.googleService;

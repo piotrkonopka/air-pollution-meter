@@ -40,7 +40,7 @@ class DisplayData extends PureComponent<DisplayDataProps, State> {
         
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-        if (Object.keys(pollution).length !== 0) {
+        if (Object.keys(pollution).length !== 0 && typeof(pollution.address) !== 'undefined') {
                 const colors: string[] = [
                     'forestgreen',
                     'gold',
@@ -74,8 +74,15 @@ class DisplayData extends PureComponent<DisplayDataProps, State> {
                 context.font = '16px serif';
                 context.fillText(`Air quality is ${pollutionLevel[pollution.pollutionLevel - 1]}`, 110, 40);
                 context.font = '12px serif';
-                context.fillText(`PM10: ${Math.round(pollution.pm10)}%`, 110, 60);
-                context.fillText(`PM25: ${Math.round(pollution.pm25)}%`, 110, 80);
+                
+                let verticalPosition = 60;
+                if (typeof(pollution.pm10) !== 'undefined') {
+                    context.fillText(`PM10: ${Math.round(pollution.pm10)}%`, 110, verticalPosition);
+                    verticalPosition += 20;
+                } 
+                if (typeof(pollution.pm25) !== 'undefined') {
+                    context.fillText(`PM25: ${Math.round(pollution.pm25)}%`, 110, verticalPosition);
+                } 
         } else {
                 context.font = '40px serif';
                 context.fillStyle = 'black';
